@@ -125,7 +125,7 @@
                                           +'<p>Type: '+type.category+'</p>';
                               $('#header_content').append(display);
                                                     },
-                            error: function(data){
+                            error: function(result){
                               alert("Unsufficient details. Not able to connect to server");
                                    }
                           });
@@ -138,40 +138,44 @@
               var email = "email";
               email = window.localStorage.getItem('email');
               selected_item = window.localStorage.getItem('selected_item');
-              // alert(selected_item);
-              // alert(email);
               var name = $("#name").val();
               var telephone = $("#telephone").val();
               var quantity = $("#quantity").val();
               var remarks = $("#remarks").val();
               var type_taste = $("#type_taste").val();
-              var dataStringB = 'name='+ name + '&telephone='+ telephone + '&quantity='+ quantity + '&remarks='+ remarks + '&selected_item='+ selected_item + '&email='+ email + '&type_taste='+ type_taste;
-              //alert(dataStringB);
+              var dataString = 'name='+ name + '&telephone='+ telephone + '&quantity='+ quantity + '&remarks='+ remarks + '&selected_item='+ selected_item + '&email='+ email + '&type_taste='+ type_taste;
+              alert(dataString);
               if(telephone == '')
               {
                 alert("Fill The fields to Continue");
               }
-                else
-                {   
-                  /// Always the ajax response is going a error although status is 200 OK
-                  $.ajax({
+              else
+              {
+                $.ajax({
                       type: "POST",
                       url: "http://172.19.20.172/online_food_scripts/insertBuylist.php",
-                      dataType: "json",
-                      data: dataStringB,
+                      data: dataString,
                       cache: false,
-                      async: false,
-                      success: function(){
-                          alert("Item Sucessfully Added In cart");
-                          window.location.href = "buylist.html";
+                      success: function(result){
+                      if(result == 'Invalid')
+                        {
+                          alert("Incorrect Values");
+                        }
+                        else
+                        {
+                          alert("Sucessfully Update in Cart!");
+                        }
                                                 },
-                        error: function(){
-                          alert("Not able to connect to server");
-                                             }
+                        error: function(data){
+                          
+                          alert("Sucessfully Update in Cart!");
+                          window.location.href = "category.html";
+                               }
                       });
-                  }
+              }
 
                 });
+              
               });
       </script>
     </body>

@@ -22,19 +22,17 @@ if(isset($email))
 
 	if($output)
 	{
-		echo "Valid";
+		 echo "Valid";
 	}
 	else
 	{
-		echo "Not able to update Cart";
+		 echo "NoCart";
 	}
 }
 else
 {
-	echo "Invalid"
+	 echo "Invalid";
 }
-
-
 
 
 ?>
