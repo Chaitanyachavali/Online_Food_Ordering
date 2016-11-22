@@ -22,7 +22,7 @@
       	<li><a href="#"></a></li>
         <li><a href="#">Profile</a></li>
         <li><a href="category.html">Category's</a></li>
-        <li><a href="#">Check Out</a></li>
+        <li><a href="checkout.html">Check Out</a></li>
       </ul>
     </div>
   </nav>
@@ -40,29 +40,12 @@
           </tr>
         </thead>
 
-        <tbody>
-          <tr>
-            <td>Brocoli</td>
-            <td>2</td>
-            <td>INR 500</td>
-            <td>INR 1000</td>
-          </tr>
-          <tr>
-            <td>Devilled Eggs</td>
-            <td>5</td>
-            <td>INR 20</td>
-            <td>INR 100</td>
-          </tr>
-          <tr>
-            <td>Chicken Caesar Pasta Salad</td>
-            <td>2</td>
-            <td>INR 1000</td>
-            <td>INR 2000</td>
-          </tr>
+        <tbody id="tbody">
         </tbody>
       </table><br><br>
-      <h5>Grand Total : INR 3200 </h5> <br>
-      <a class="waves-effect waves-light btn">Make Payment</a>
+      <div id="totaldiv"> </div>  
+      <a class="waves-effect waves-light btn">Make Payment</a><br><br>
+      <a class="waves-effect waves-light btn">Go Back to Cart</a><br>
 </center><br>
 <footer class="page-footer">
           <div class="container">
@@ -86,5 +69,47 @@
       		 $(".button-collapse").sideNav();
       		});
       	//
+      </script>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          var email = "temp";
+          email = window.localStorage.getItem('email');
+          var gtotal = 0;
+          var dataString = 'email='+ email;
+          $.ajax({
+                          type: "POST",
+                          url: "http://172.19.20.172/online_food_scripts/getBuyList.php",
+                          data: dataString,
+                          cache: false,
+                          success: function(result){
+                            //alert(result);
+                          if(result == 'Invalid')
+                            {
+                              alert("Data Ripped");
+                            }
+                            else
+                            {
+                              var buy = JSON.parse(result);
+                              for(var i in buy)
+                               {
+                                  var total = buy[i].quantity*buy[i].price_per_item;
+                                  gtotal = total+gtotal;
+                                  var details = '<tr>'
+                                                +'<td>'+buy[i].item_name+'</td>'
+                                                +'<td>'+buy[i].quantity+'</td>'
+                                                +'<td>INR '+buy[i].price_per_item+'</td>'
+                                                +'<td>'+total+'</td>'
+                                                +'</tr>';
+                                  $('#tbody').append(details);
+                              }
+                              $('#totaldiv').append('<h5>Grand Total : INR '+gtotal+' </h5> <br>')
+                            }
+                                                    },
+                            error: function(data){
+                              
+                              alert("Unsufficient details. Not able to connect to server");
+                                   }
+                          });
+    });
       </script>
     </body>

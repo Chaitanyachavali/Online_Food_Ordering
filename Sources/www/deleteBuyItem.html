@@ -34,10 +34,9 @@
 <!-- nav ends -->
 <br><br>
 <center>
-	<h4 class="header">Buy List</h4><br>
+	<h4 class="header">Are You sure to Delete...?</h4><br>
   <div id="display_buy"></div>
-      <a href="category.html" class="waves-effect waves-light btn">Continue to Shop</a><br><br>
-      <a href="checkout.html" class="waves-effect waves-light btn">Check Out</a>
+	
 </center><br>
 <footer class="page-footer">
           <div class="container">
@@ -65,11 +64,13 @@
       <script type="text/javascript">
         $(document).ready(function(){
           var email = "temp";
+          var buy_id = 0;
           email = window.localStorage.getItem('email');
-          var dataString = 'email='+ email;
+          buy_id = window.localStorage.getItem('buy_id');
+          var dataString = 'email='+ email + '&buy_id='+ buy_id;
           $.ajax({
                           type: "POST",
-                          url: "http://172.19.20.172/online_food_scripts/getBuyList.php",
+                          url: "http://172.19.20.172/online_food_scripts/getDeleteItem.php",
                           data: dataString,
                           cache: false,
                           success: function(result){
@@ -81,26 +82,24 @@
                             else
                             {
                               var buy = JSON.parse(result);
-                              for(var i in buy)
-                               {
                                   var details = '<div class="row" id="display_item">'
                                                +'<div class="col s12 m6">'
                                                +'<div class="card blue-grey darken-1">'
                                                +'<div class="card-content white-text">'
-                                               +'<span class="card-title">Buy Id: CF'+buy[i].buy_id+'</span>'
-                                               +'<p>Item Name: '+buy[i].item_name+'</p>'
-                                               +'<p>Quantity: '+buy[i].quantity+'</p>'
-                                               +'<p>Price: INR '+buy[i].price_per_item+'/- peritem</p>'
-                                               +'<label id="hidden">'+buy[i].buy_id+'</label>'
+                                               +'<span class="card-title">Buy Id: CF'+buy.buy_id+'</span>'
+                                               +'<p>Item Name: '+buy.item_name+'</p>'
+                                               +'<p>Quantity: '+buy.quantity+'</p>'
+                                               +'<p>Price: INR '+buy.price_per_item+'/- peritem</p>'
+                                               +'<label id="hidden">'+buy.buy_id+'</label>'
                                                +'</div>'
                                                +'<div class="card-action">'
-                                               +'<button class="btn waves-effect waves-light" type="submit" name="action" id="deleteBtn">Delete</button>'
+                                               +'<button class="btn waves-effect waves-light" type="submit" name="action" id="yesBtn">Yes</button>&nbsp;&nbsp;&nbsp;'
+                                               +'<button class="btn waves-effect waves-light" type="submit" name="action" id="noBtn">No I want That</button>'
                                                +'</div>'
                                                +'</div>'
                                               +'</div>'
                                               +'</div>'
                                   $('#display_buy').append(details);
-                              }
                             }
                                                     },
                             error: function(data){
@@ -111,19 +110,67 @@
     });
       </script>
       <script type="text/javascript">
-        $(document).on("click", "#deleteBtn", function(){
-          //alert("working");
-          var buy_id = $(this).parents('#display_item').find('label').text();
-          //alert(buy_id);
-           window.localStorage.setItem('buy_id', buy_id);
-           window.location.href = "deleteBuyItem.html";
+        $(document).on("click", "#noBtn", function(){
+           window.location.href = "buylist.html";
         });
-        $(document).on("touchend", "#deleteBtn", function(){
-          //alert("working");
-          var buy_id = $(this).parents('#display_item').find('label').text();
-          //alert(buy_id);
-           window.localStorage.setItem('buy_id', buy_id);
-           window.location.href = "deleteBuyItem.html";
+        $(document).on("touchend", "#noBtn", function(){
+           window.location.href = "buylist.html";
+        });
+      </script>
+      <script type="text/javascript">
+        $(document).on("click", "#yesBtn", function(){
+           buy_id = window.localStorage.getItem('buy_id');
+           var dataString = 'buy_id='+ buy_id;
+          $.ajax({
+                          type: "POST",
+                          url: "http://172.19.20.172/online_food_scripts/deleteInTempBuy.php",
+                          data: dataString,
+                          cache: false,
+                          success: function(result){
+                            //alert(result);
+                          if(result == 'Invalid')
+                            {
+                              alert("Data Ripped");
+                            }
+                            else
+                            {
+                              alert("Sucessfully Item Has been removed from cart");
+                              window.location.href = "buylist.html";
+                            }
+                                                    },
+                            error: function(data){
+                              
+                              alert("Unsufficient details. Not able to connect to server");
+                                   }
+                          });
+        });
+      </script>
+      <script type="text/javascript">
+        $(document).on("touchend", "#yesBtn", function(){
+           buy_id = window.localStorage.getItem('buy_id');
+           var dataString = 'buy_id='+ buy_id;
+          $.ajax({
+                          type: "POST",
+                          url: "http://172.19.20.172/online_food_scripts/deleteInTempBuy.php",
+                          data: dataString,
+                          cache: false,
+                          success: function(result){
+                            //alert(result);
+                          if(result == 'Invalid')
+                            {
+                              alert("Data Ripped");
+                            }
+                            else
+                            {
+                              alert("Sucessfully Item Has been removed from cart");
+                              window.location.href = "buylist.html";
+                            }
+                                                    },
+                            error: function(data){
+                              
+                              alert("Unsufficient details. Not able to connect to server");
+                                   }
+                          });
         });
       </script>
     </body>

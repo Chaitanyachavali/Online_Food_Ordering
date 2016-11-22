@@ -146,36 +146,30 @@
               var remarks = $("#remarks").val();
               var type_taste = $("#type_taste").val();
               var dataStringB = 'name='+ name + '&telephone='+ telephone + '&quantity='+ quantity + '&remarks='+ remarks + '&selected_item='+ selected_item + '&email='+ email + '&type_taste='+ type_taste;
-              alert(dataStringB);
+              //alert(dataStringB);
               if(telephone == '')
               {
                 alert("Fill The fields to Continue");
               }
                 else
-                {
+                {   
+                  /// Always the ajax response is going a error although status is 200 OK
                   $.ajax({
                       type: "POST",
                       url: "http://172.19.20.172/online_food_scripts/insertBuylist.php",
+                      dataType: "json",
                       data: dataStringB,
                       cache: false,
-                      success: function(result){
-                      //alert(result);
-                      if(result == 'Invalid')
-                        {
-                          alert("Server Not able to understand");
-                        }
-                        else
-                        {
+                      async: false,
+                      success: function(){
                           alert("Item Sucessfully Added In cart");
                           window.location.href = "buylist.html";
-                        }
                                                 },
-                        error: function(result){
-                          
+                        error: function(){
                           alert("Not able to connect to server");
-                               }
+                                             }
                       });
-                }
+                  }
 
                 });
               });
