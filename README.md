@@ -1,6 +1,6 @@
-# Hello World PhoneGap Template [![bitHound Score][bithound-img]][bithound-url]
+# Morning Tiffin [![bitHound Score][bithound-img]][bithound-url]
 
-A PhoneGap Hello World template
+Morning Tiffin aims to supply tiffins to various households in Kolkata in the morning time. The segment is largely uncaptured.
 
 ## Usage
 
