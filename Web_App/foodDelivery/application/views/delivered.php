@@ -6,8 +6,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Current Orders
-        <small>(Displayed till order's status = Delivered!)</small>
+        Delivered Orders
+        <small>(Displayed order's status != Delivered!)</small>
       </h1>
       <!-- <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -35,9 +35,12 @@
                   <th>Contact</th>
                   <th>Item</th>
                   <th>Quantity</th>
-                  <th>Date</th>
-                  <th>Time</th>
+                  <th>Purchase Date</th>
+                  <th>Purchase Time</th>
                   <th>Purchase Remarks</th>
+                  <th>Delivery Date</th>
+                  <th>Delivery Time</th>
+                  <th>Delivery Remarks</th>
                   <th>Status</th>
                 </tr>
                 </thead>
@@ -75,6 +78,15 @@
                       <?php echo $row->purchase_Remarks;?>
                     </td>
                     <td>
+                      <?php echo $row->date_of_delivery;?>
+                    </td>
+                    <td>
+                      <?php echo $row->time_of_delivery;?>
+                    </td>
+                    <td>
+                      <?php echo $row->delivery_Remarks;?>
+                    </td>
+                    <td>
                       <?php echo $row->status;?>
                     </td>
                   </tr>
@@ -88,9 +100,12 @@
                   <th>Contact</th>
                   <th>Item</th>
                   <th>Quantity</th>
-                  <th>Date</th>
-                  <th>Time</th>
+                  <th>Purchase Date</th>
+                  <th>Purchase Time</th>
                   <th>Purchase Remarks</th>
+                  <th>Delivery Date</th>
+                  <th>Delivery Time</th>
+                  <th>Delivery Remarks</th>
                   <th>Status</th>
                 </tr>
                 </tfoot>

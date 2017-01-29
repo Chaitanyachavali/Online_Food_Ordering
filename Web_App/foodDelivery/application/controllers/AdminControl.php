@@ -84,10 +84,91 @@ class AdminControl extends CI_Controller {
 		$this->load->view('footer', $data);
 	}
 
+	// signing out the user
 	public function logout()
 	{
 		session_unset();
 		session_destroy();
 		redirect(base_url());
+	}
+
+
+	//All orderPage
+	public function allOrdersPage()
+	{
+		$this->load->model("databaseConnect");
+		$dorders = $this->databaseConnect->getAllOrders();
+		foreach ($dorders as &$row) {
+		$row->name = $this->databaseConnect->getUserName($row->mail);
+		$row->item_id = $this->databaseConnect->getItemName($row->item_id);
+		}
+		$data["rows"] = $dorders;
+		$this->load->view('header', $data);
+		$this->load->view('delivered', $data);
+		$this->load->view('footer', $data);
+	}
+
+	//Start Preparing
+	public function startPrepare($id)
+	{
+		$this->load->model("databaseConnect");
+		$this->databaseConnect->startOrder($id);
+		redirect("AdminControl/dashboardPage");
+
+	}
+
+	//Cancel Order
+	public function cancelOrder($id)
+	{
+		$this->load->model("databaseConnect");
+		$this->databaseConnect->cancelOrder($id);
+		redirect("AdminControl/dashboardPage");
+
+	}
+
+	//To Delivery
+	public function deliverInit($id)
+	{
+		$this->load->model("databaseConnect");
+		$this->databaseConnect->deliverStart($id);
+		redirect("AdminControl/dashboardPage");
+
+	}
+
+	//Delivered
+	public function delivered($id)
+	{
+		$this->load->model("databaseConnect");
+		$this->databaseConnect->delivered($id);
+		redirect("AdminControl/dashboardPage");
+
+	}
+
+	//Add Items
+	public function addItem()
+	{
+		$this->load->model("databaseConnect");
+		$categ = $this->databaseConnect->getCateg();
+		$data["rows"] = $categ;
+
+		$this->load->view('header',$data);
+		$this->load->view('addItems', $data);
+		$this->load->view('footer', $data);
+	}
+
+	//add Item Form
+	public function addItemForm()
+	{
+		$name = $this->input->post("itemname");
+		$categ = $this->input->post("categ");
+		$price = $this->input->post("price");
+		$max_maker = $this->input->post("m_n");
+		$max_user = $this->input->post("m_u");
+		$min_time = $this->input->post("time");
+		$desc = $this->input->post("desc");
+
+		$this->load->model("databaseConnect");
+		$this->databaseConnect->addItem($name, $categ, $price, $max_maker, $max_user, $min_time, $desc);
+		redirect("AdminControl/addItem");
 	}
 }

@@ -1,5 +1,4 @@
 
-
   <!-- =============================================== -->
 
   <!-- Content Wrapper. Contains page content -->
@@ -7,8 +6,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Current Orders
-        <small>(Displayed till order's status = Delivered!)</small>
+        All Orders
+        <small>No Restrictions</small>
       </h1>
       <!-- <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -36,11 +35,13 @@
                   <th>Contact</th>
                   <th>Item</th>
                   <th>Quantity</th>
-                  <th>Date</th>
-                  <th>Time</th>
+                  <th>Purchase Date</th>
+                  <th>Purchase Time</th>
                   <th>Purchase Remarks</th>
+                  <th>Delivery Date</th>
+                  <th>Delivery Time</th>
+                  <th>Delivery Remarks</th>
                   <th>Status</th>
-                  <th>Change</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,29 +78,17 @@
                       <?php echo $row->purchase_Remarks;?>
                     </td>
                     <td>
-                      <?php echo $row->status;?>
+                      <?php echo $row->date_of_delivery;?>
                     </td>
                     <td>
-                        <?php if($row->status == 'ordered')
-                        {
-                          echo '<a class = "btn btn-block btn-primary" href =
-                "startPrepare/'.$row->purchase_id .'">Start Preparing</a> &nbsp;&nbsp;
-                      <a class = "btn btn-block btn-danger" href =
-                "cancelOrder/'.$row->purchase_id .'">Cancel Order</a>';
-                        }
-                        elseif($row->status == 'startedpreparing')
-                        {
-                           echo '<a class = "btn btn-block btn-primary" href =
-                "deliverInit/'.$row->purchase_id .'">Init Delivery</a> &nbsp;&nbsp;';
-                        }
-                        elseif($row->status == 'intransit')
-                        {
-                           echo '<a class = "btn btn-block btn-primary" href =
-                "delivered/'.$row->purchase_id .'">Deliverd</a> &nbsp;&nbsp;';
-                        }
-                        ?>
+                      <?php echo $row->time_of_delivery;?>
                     </td>
-
+                    <td>
+                      <?php echo $row->delivery_Remarks;?>
+                    </td>
+                    <td>
+                      <?php echo $row->status;?>
+                    </td>
                   </tr>
                 <?php }?>
                  </tbody>
@@ -111,11 +100,13 @@
                   <th>Contact</th>
                   <th>Item</th>
                   <th>Quantity</th>
-                  <th>Date</th>
-                  <th>Time</th>
+                  <th>Purchase Date</th>
+                  <th>Purchase Time</th>
                   <th>Purchase Remarks</th>
+                  <th>Delivery Date</th>
+                  <th>Delivery Time</th>
+                  <th>Delivery Remarks</th>
                   <th>Status</th>
-                  <th>Change</th>
                 </tr>
                 </tfoot>
               </table>
@@ -133,3 +124,4 @@
   </div>
   <!-- /.content-wrapper -->
 
+  

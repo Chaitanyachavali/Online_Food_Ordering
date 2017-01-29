@@ -26,7 +26,7 @@
    //get current Orders
    public function getCurrentOrders()
    {
-   	$u = "select * from of.of_purchases where of_purchases.`status` != 'delivered'";
+   	$u = "select * from of.of_purchases where of_purchases.`status` != 'delivered' and of_purchases.`status` != 'cancelled'";
    	$query = $this->db->query($u);
    	return $query->result();
    }
@@ -59,6 +59,72 @@
    	return $query->result();
    }
 
+   //get all Orders
+   public function getAllOrders()
+   {
+   	$u = "select * from of.of_purchases";
+   	$query = $this->db->query($u);
+   	return $query->result();
+   }
+
+   //Start Order
+   public function startOrder($id)
+   {
+   	$data=array(
+        'status'=>'startedpreparing');
+        $this->db->where('purchase_id',$id);
+        $this->db->update('of_purchases',$data);
+   }
+
+   //Cancel Order
+   public function cancelOrder($id)
+   {
+   	$data=array(
+        'status'=>'cancelled');
+        $this->db->where('purchase_id',$id);
+        $this->db->update('of_purchases',$data);
+   }
+
+   //Intransit Order
+   public function deliverStart($id)
+   {
+   	$data=array(
+        'status'=>'intransit');
+        $this->db->where('purchase_id',$id);
+        $this->db->update('of_purchases',$data);
+   }
+
+   //Delivered Order
+   public function delivered($id)
+   {
+   	$data=array(
+        'status'=>'delivered');
+        $this->db->where('purchase_id',$id);
+        $this->db->update('of_purchases',$data);
+   }
+
+   //get All Categorys
+   public function getCateg()
+   {
+   	$u = "select distinct category from of.of_items";
+   	$query = $this->db->query($u);
+   	return $query->result();
+   }
+
+   //Add Item
+   public function addItem($name, $categ, $price, $max_maker, $max_user, $min_time, $desc)
+      {
+          $data = array(
+                'name' => $name,
+                'category' => $categ,
+                'price_per_item' => $price,
+                'max_num_maker' => $max_maker,
+                'max_num_user' => $max_user,
+                'min_time' => $min_time,
+                'desc' => $desc
+                );
+                $this->db->insert('of_items', $data);
+      }
 }
 
 
