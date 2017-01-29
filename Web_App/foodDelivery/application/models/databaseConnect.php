@@ -23,6 +23,42 @@
    	return $query->result()[0];
    }
 
+   //get current Orders
+   public function getCurrentOrders()
+   {
+   	$u = "select * from of.of_purchases where of_purchases.`status` != 'delivered'";
+   	$query = $this->db->query($u);
+   	return $query->result();
+   }
+
+   //get User's name
+   public function getUserName($mail)
+   {
+      $u = "select name from of.of_users where of_users.mail = '$mail'";
+      $query = $this->db->query($u);
+      foreach ($query->result() as $key) {
+          return $key->name;
+      }
+   }
+
+   //get Item Name
+   public function getItemName($id)
+   {
+      $u = "select name from of.of_items where of_items.item_id = $id";
+      $query = $this->db->query($u);
+      foreach ($query->result() as $key) {
+          return $key->name;
+      }
+   }
+
+   //get Delivered Orders
+   public function getDeliveredOrders()
+   {
+   	$u = "select * from of.of_purchases where of_purchases.`status` = 'delivered'";
+   	$query = $this->db->query($u);
+   	return $query->result();
+   }
+
 }
 
 

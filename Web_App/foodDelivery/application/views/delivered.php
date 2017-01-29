@@ -1,61 +1,3 @@
-  <!-- =============================================== -->
-
-  <!-- Left side column. contains the sidebar -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <!-- Sidebar user panel -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="<?php echo base_url(); ?>assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p><?php echo $_SESSION["username"];?></p>
-          <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
-          <p><?php echo $_SESSION["mail"];?></p>
-        </div>
-      </div>
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
-        <li class="header">Main Navigation</li>
-        <li class="treeview">
-          <a href="<?php echo base_url(); ?>index.php/AdminControl/dashboardPage">
-            <i class="fa fa-dashboard"></i> <span>Current Orders</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="<?php echo base_url(); ?>index.php/AdminControl/deliveredPage">
-            <i class="fa fa-check"></i>
-            <span>Delivered Orders</span>
-            <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-              <!-- <span class="label label-primary pull-right">4</span> -->
-            </span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="<?php echo base_url(); ?>index.php/AdminControl/editItem">
-            <i class="fa  fa-circle-o-notch"></i> <span>Edit Items</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="<?php echo base_url(); ?>index.php/AdminControl/addItem">
-            <i class="fa  fa-cloud-upload"></i> <span>Add Items</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-        </li>
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
 
   <!-- =============================================== -->
 
@@ -97,7 +39,6 @@
                   <th>Time</th>
                   <th>Purchase Remarks</th>
                   <th>Status</th>
-                  <th>Change</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -136,13 +77,6 @@
                     <td>
                       <?php echo $row->status;?>
                     </td>
-                    <td>
-                      <a class = "btn btn-block btn-primary" href =
-                "<?php echo base_url(); ?>index.php/AdminControl/startPrepare/<?php echo $row->purchase_id; ?>">Start Preparing</a> &nbsp;&nbsp;
-                      <a class = "btn btn-block btn-danger" href =
-                "<?php echo base_url(); ?>index.php/AdminControl/cancelOrder/<?php echo $row->purchase_id; ?>">Cancel Order</a>
-                    </td>
-
                   </tr>
                 <?php }?>
                  </tbody>
@@ -158,7 +92,6 @@
                   <th>Time</th>
                   <th>Purchase Remarks</th>
                   <th>Status</th>
-                  <th>Change</th>
                 </tr>
                 </tfoot>
               </table>
@@ -176,3 +109,4 @@
   </div>
   <!-- /.content-wrapper -->
 
+  

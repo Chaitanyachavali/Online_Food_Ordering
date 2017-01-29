@@ -32,10 +32,17 @@ class AdminControl extends CI_Controller {
 			$_SESSION['name'] = $datavals->name;
 			$_SESSION['contact'] = $datavals->contact;
 			$_SESSION['mail'] = $datavals->mail;
-			$data["row"] = $datavals;
-			$this->load->view('dashboard',$data);
+			//$data["row"] = $datavals;
+			$corders = $this->databaseConnect->getCurrentOrders();
+			foreach ($corders as &$row) {
+			$row->name = $this->databaseConnect->getUserName($row->mail);
+			$row->item_id = $this->databaseConnect->getItemName($row->item_id);
+			}
+			$data["rows"] = $corders;
+			$this->load->view('header', $data);
+			$this->load->view('dashboard', $data);
+			$this->load->view('footer', $data);
 			//redirect("AdminControl/pagename");
-
 		}
 		else
 		{
@@ -45,5 +52,42 @@ class AdminControl extends CI_Controller {
 			$this->load->view('login',$data);
 			//redirect(base_url());
 		}
+	}
+
+	//dashboard Page
+	public function dashboardPage()
+	{
+		$this->load->model("databaseConnect");
+		$corders = $this->databaseConnect->getCurrentOrders();
+		foreach ($corders as &$row) {
+		$row->name = $this->databaseConnect->getUserName($row->mail);
+		$row->item_id = $this->databaseConnect->getItemName($row->item_id);
+		}
+		$data["rows"] = $corders;
+		$this->load->view('header', $data);
+		$this->load->view('dashboard', $data);
+		$this->load->view('footer', $data);
+	}
+
+	//Delevired Page
+	public function deliveredPage()
+	{
+		$this->load->model("databaseConnect");
+		$dorders = $this->databaseConnect->getDeliveredOrders();
+		foreach ($dorders as &$row) {
+		$row->name = $this->databaseConnect->getUserName($row->mail);
+		$row->item_id = $this->databaseConnect->getItemName($row->item_id);
+		}
+		$data["rows"] = $dorders;
+		$this->load->view('header', $data);
+		$this->load->view('delivered', $data);
+		$this->load->view('footer', $data);
+	}
+
+	public function logout()
+	{
+		session_unset();
+		session_destroy();
+		redirect(base_url());
 	}
 }
